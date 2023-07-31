@@ -21,6 +21,17 @@ ul {
   }
 }
 
+.primary-content {
+  background-color: #090d11;
+  width: 100%;
+  min-height: 80vh;
+  flex-direction: column;
+  display: flex;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+
 //----------------------------------------------------------------
 
 section h2 {
