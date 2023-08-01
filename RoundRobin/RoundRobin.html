@@ -39,7 +39,7 @@
     </div>
 
     <div class="content">
-      <div class="primary-content">
+      <div class="primary-content primary-content__round-robin">
         <div class="home">
           <a href="#">
             <img src="/assets/icons/home.svg" style="width: 24px" alt="" />
@@ -51,8 +51,8 @@
             >&times;</a
           >
           <div class="overlay-content">
-            <a href="./index.html">Home</a>
-            <a href="./First-fit/FirstFit.html">First-Fit</a>
+            <a href="../index.html">Home</a>
+            <a href="../First-fit/FirstFit.html">First-Fit</a>
             <a href="../RoundRobin/RoundRobin.html">Round Robin</a>
             <a href="../Prioridade/Prioridade.html"
               >Escalonador por prioridade</a
@@ -100,12 +100,19 @@
                 required
               />
             </div>
-            <button type="button" onclick="executarRoundRobin()">
-              Executar Round Robin
-            </button>
+            <div>
+              <button
+                class="btn-button"
+                type="button"
+                onclick="executarRoundRobin()"
+              >
+                Executar Round Robin
+              </button>
+            </div>
           </form>
         </section>
       </div>
+
       <div class="results">
         <h3>Resultado:</h3>
         <div class="fila" id="result-fila"></div>

@@ -16,6 +16,10 @@
 @import "./Partials/layoutPreemptiva";
 @import "./Partials/layoutFormProcess";
 
+#myNav{
+ display: none;
+}
+
 body {
   font-family: "Sora", sans-serif;
   width: 100%;

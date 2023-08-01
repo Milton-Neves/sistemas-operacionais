@@ -3,14 +3,22 @@
   width: 100%;
   min-height: 80vh;
   flex-direction: column;
-  /* padding-top: 15px; */
-  /* padding-left: 15px; */
   display: flex;
   padding: 2rem;
   gap: 1rem;
 }
 
-
+.primary-content__round-robin,
+.primary-content__preemptiva,
+.primary-content__bestfit {
+  background-color: #090d11;
+  width: 24%;
+  min-height: 80vh;
+  flex-direction: column;
+  display: flex;
+  padding: 2rem;
+  gap: 1rem;
+}
 .second-process {
   width: 75%;
   //  padding: 10px;

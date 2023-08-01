@@ -1,52 +1,46 @@
-
 // JAVASCRIPT NOVO
 
 function openNav() {
   document.getElementById("myNav").style.width = "35%";
+  document.getElementById("myNav").style.display = "block";
 }
 
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
+  document.getElementById("myNav").style.display = "none";
 }
 
 // FINAL JAVASCRIPT NOVO
 
 function alocarMemoriaBestFit(blocosMemoria, tamanhoNecessario) {
-    let melhorIndice = -1;
-    let menorDiferenca = Infinity;
-  
-    for (let i = 0; i < blocosMemoria.length; i++) {
-      const tamanhoBloco = blocosMemoria[i];
-  
-      if (tamanhoBloco >= tamanhoNecessario) {
-        const diferenca = tamanhoBloco - tamanhoNecessario;
-  
-        if (diferenca < menorDiferenca) {
-          melhorIndice = i;
-          menorDiferenca = diferenca;
-        }
+  let melhorIndice = -1;
+  let menorDiferenca = Infinity;
+
+  for (let i = 0; i < blocosMemoria.length; i++) {
+    const tamanhoBloco = blocosMemoria[i];
+
+    if (tamanhoBloco >= tamanhoNecessario) {
+      const diferenca = tamanhoBloco - tamanhoNecessario;
+
+      if (diferenca < menorDiferenca) {
+        melhorIndice = i;
+        menorDiferenca = diferenca;
       }
     }
-  
-    return melhorIndice;
   }
-  
-  
-  
-  // Exemplo de uso:
-  const blocosMemoria = [100, 50, 200, 80, 150];
-  
-  const tamanhoNecessario = 100;
-  
-  const indiceAlocado = alocarMemoriaBestFit(blocosMemoria, tamanhoNecessario);
-  
-  if (indiceAlocado !== -1) {
-  
-    console.log(`Bloco alocado no índice ${indiceAlocado}`);
-    
-  } else {
-  
-    console.log("Nenhum bloco adequado encontrado.");
-    
-  }
-  
+
+  return melhorIndice;
+}
+
+// Exemplo de uso:
+const blocosMemoria = [100, 50, 200, 80, 150];
+
+const tamanhoNecessario = 100;
+
+const indiceAlocado = alocarMemoriaBestFit(blocosMemoria, tamanhoNecessario);
+
+if (indiceAlocado !== -1) {
+  console.log(`Bloco alocado no índice ${indiceAlocado}`);
+} else {
+  console.log("Nenhum bloco adequado encontrado.");
+}
