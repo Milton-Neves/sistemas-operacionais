@@ -1,137 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html>
+<head>
+  <title>Best-Fit Memory Allocation</title>
+  <style>
+    .bloco-memoria {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      border: 1px solid black;
+      text-align: center;
+      line-height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Best-Fit Memory Allocation</h1>
+  <div>
+    <label for="tamanhoBloco">Tamanho do Bloco Necessário:</label>
+    <input type="text" id="tamanhoBloco" />
+    <button onclick="alocarMemoria()">Alocar Memória</button>
+    <button onclick="criarBlocoVazio()">Criar Bloco Vazio</button>
+  </div>
+  <div id="blocos-memoria">
+    <!-- Aqui serão representados visualmente os blocos de memória -->
+  </div>
+  <div id="resultado-alocacao">
+    <!-- Aqui será exibido o resultado da alocação -->
+  </div>
+  <script>
+    let blocosMemoria = [];
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    function gerarTamanhoAleatorio() {
+      return Math.floor(Math.random() * 128 + 1); // Gerar tamanhos aleatórios entre 1 e 128 MB
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    function alocarBestFit(blocosMemoria, tamanhoBlocoNecessario) {
+      let indiceBlocoAlocado = -1;
+      let tamanhoBlocoAlocado = Number.MAX_SAFE_INTEGER;
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+      for (let i = 0; i < blocosMemoria.length; i++) {
+        const blocoAtual = blocosMemoria[i];
 
-    <link rel="stylesheet" href="../style.css" />
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <title>Simulador</title>
-  </head>
-
-  <body>
-    <div class="bg-home">
-      <header>
-        <main class="hero container">
-          <h1>SIMULADORES DE ALGORITMOS COM JAVASCRIPT</h1>
-          <img src="/assets/icons/js.svg" style="width: 24px" alt="" />
-        </main>
-      </header>
-    </div>
-
-    <div class="content">
-      <div class="primary-content primary-content__bestfit">
-        <div class="home">
-          <a href="../index.html">
-            <img src="/assets/icons/home.svg" style="width: 24px" alt="" />
-            HOME
-          </a>
-        </div>
-
-        <div id="myNav" class="overlay">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-            >&times;</a
-          >
-
-          <div class="overlay-content">
-            <a href="../index.html">Home</a>
-            <a href="../First-fit/FirstFit.html">First-Fit</a>
-            <a href="../RoundRobin/RoundRobin.html">Round Robin</a>
-            <a href="../Prioridade/Prioridade.html"
-              >Escalonador por prioridade</a
-            >
-            <a href="../BestFit/BestFit.html">Best-Fit</a>
-            <a href="../Preemptiva/Preemptiva.html">Preemptiva</a>
-            <a href="../Processo/Processo.html">Escalonador de processos</a>
-          </div>
-        </div>
-        <a class="nav-button" onclick="openNav()">SIMULADORES</a>
-      </div>
-
-      <div class="second-content-form">
-        <section class="second-content-FirstFit">
-          <h2>Simulador Best-Fit</h2>
-
-          <div class="form">
-            <div>
-              <!--AREA DO FORMULARIO-->
-            </div>
-
-            <h3>Resultado:</h3>
-            <div class="resultado">
-              <!--AREA DO RESULTADO-->
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <script>
-      // JAVASCRIPT NOVO
-
-      function openNav() {
-        document.getElementById("myNav").style.width = "35%";
-        document.getElementById("myNav").style.display = "block";
+        if (blocoAtual.tamanho >= tamanhoBlocoNecessario && !blocoAtual.alocado && blocoAtual.tamanho < tamanhoBlocoAlocado) {
+          indiceBlocoAlocado = i;
+          tamanhoBlocoAlocado = blocoAtual.tamanho;
+        }
       }
 
-      function closeNav() {
-        document.getElementById("myNav").style.width = "0%";
-        document.getElementById("myNav").style.display = "none";
-      }
+      return indiceBlocoAlocado;
+    }
 
-      // FINAL JAVASCRIPT NOVO
+    function alocarMemoria() {
+      const tamanhoBlocoNecessario = parseInt(document.getElementById("tamanhoBloco").value);
 
-      function alocarMemoriaBestFit(blocosMemoria, tamanhoNecessario) {
-        let melhorIndice = -1;
-        let menorDiferenca = Infinity;
+      if (!isNaN(tamanhoBlocoNecessario)) {
+        const indiceBlocoAlocado = alocarBestFit(blocosMemoria, tamanhoBlocoNecessario);
 
-        for (let i = 0; i < blocosMemoria.length; i++) {
-          const tamanhoBloco = blocosMemoria[i];
+        if (indiceBlocoAlocado !== -1) {
+          const blocoAlocado = blocosMemoria[indiceBlocoAlocado];
+          blocoAlocado.alocado = true;
 
-          if (tamanhoBloco >= tamanhoNecessario) {
-            const diferenca = tamanhoBloco - tamanhoNecessario;
-
-            if (diferenca < menorDiferenca) {
-              melhorIndice = i;
-              menorDiferenca = diferenca;
-            }
-          }
+          const resultadoDiv = document.getElementById("resultado-alocacao");
+          resultadoDiv.innerHTML = `Bloco alocado: ID ${blocoAlocado.id}, Tamanho ${blocoAlocado.tamanho} MB`;
+        } else {
+          alert("Nenhum bloco adequado encontrado para alocar a memória.");
         }
 
-        return melhorIndice;
-      }
-
-      // Exemplo de uso:
-      const blocosMemoria = [100, 50, 200, 80, 150];
-
-      const tamanhoNecessario = 100;
-
-      const indiceAlocado = alocarMemoriaBestFit(blocosMemoria, tamanhoNecessario);
-
-      if (indiceAlocado !== -1) {
-        console.log(`Bloco alocado no índice ${indiceAlocado}`);
+        atualizarBlocosMemoria();
       } else {
-        console.log("Nenhum bloco adequado encontrado.");
+        alert("Por favor, insira um tamanho de bloco necessário válido.");
       }
+    }
 
-    </script>
-  </body>
+    function criarBlocoVazio() {
+      const id = blocosMemoria.length + 1;
+      const tamanho = gerarTamanhoAleatorio();
+
+      blocosMemoria.push({ id, tamanho, alocado: false });
+      atualizarBlocosMemoria();
+    }
+
+    function atualizarBlocosMemoria() {
+      const blocosMemoriaDiv = document.getElementById("blocos-memoria");
+      blocosMemoriaDiv.innerHTML = "<strong>Blocos de Memória:</strong><br>";
+      blocosMemoria.forEach((bloco) => {
+        const blocoDiv = document.createElement("div");
+        blocoDiv.classList.add("bloco-memoria");
+        blocoDiv.textContent = bloco.tamanho;
+        if (bloco.alocado) {
+          blocoDiv.style.backgroundColor = "#66bb6a"; // Altera a cor do bloco alocado
+        }
+        blocoDiv.style.width = `${(bloco.tamanho / 2)}px`; // Ajusta o tamanho do bloco proporcionalmente
+        blocosMemoriaDiv.appendChild(blocoDiv);
+      });
+    }
+  </script>
+</body>
 </html>
